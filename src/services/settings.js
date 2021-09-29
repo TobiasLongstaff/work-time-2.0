@@ -1,0 +1,1 @@
+export const API_URL = 'http://localhost/work-time-2.0/api/horas-de-trabajo.php'

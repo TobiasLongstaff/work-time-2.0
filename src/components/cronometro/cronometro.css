@@ -1,0 +1,39 @@
+
+.container-cronometro
+{
+    font-size: 20px;
+    text-align: center;
+    background-color: var(--fondo3);
+    border-radius: 10px;
+    padding: 20px 40px;
+    height: 150px;
+}
+
+.container-controles-cronometro
+{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-iniciar-cronometro, .btn-reset-cronometro
+{
+    background-color: var(--principal);
+    border-radius: 10px;
+    border: none;
+    font-size: 30px;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-reset-cronometro
+{
+    background-color: var(--secundario);
+}
+
+.btn-iniciar-cronometro:active
+{
+    transform: scale(1.07);
+    transition: .2s ease;
+}
