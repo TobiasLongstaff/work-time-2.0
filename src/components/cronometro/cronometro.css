@@ -32,7 +32,7 @@
     background-color: var(--secundario);
 }
 
-.btn-iniciar-cronometro:active
+.btn-iniciar-cronometro:active, .btn-reset-cronometro:active
 {
     transform: scale(1.07);
     transition: .2s ease;

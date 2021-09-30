@@ -1,5 +1,7 @@
 import React from 'react'
 import './cronometro.css'
+import soundSuccess from '../../sounds/success.wav'
+import soundError from '../../sounds/error.wav'
 
 var cronometro
 
@@ -24,17 +26,46 @@ class Cronometro extends React.Component
 
     iniciar = () =>
     {
-        this.setState(
+        if(this.state.time.minutos === 60)
         {
-            time: 
+            this.setState(
             {
-                ...this.state.time,
-                segundos: this.state.time.segundos + 1
-            }
-        }, () =>
+                time: 
+                {
+                    ...this.state.time,
+                    horas: this.state.time.horas + 1,
+                    minutos: 0,
+                    segundos: 0
+
+                }
+            })
+        }
+
+        if(this.state.time.segundos === 60)
         {
-            console.log(this.state.time)
-        })
+            this.setState(
+            {
+                time: 
+                {
+                    ...this.state.time,
+                    minutos: this.state.time.minutos + 1,
+                    segundos: 0
+
+                }
+            })
+        }
+        else
+        {
+            this.setState(
+            {
+                time: 
+                {
+                    ...this.state.time,
+                    segundos: this.state.time.segundos + 1
+                }
+            })          
+        }
+
     }
 
     handleIniciarCronometro = e =>
@@ -46,11 +77,10 @@ class Cronometro extends React.Component
             {
                 play: true,
                 ico: 'uil uil-pause',
-            }, () =>
-            {
-                console.log(this.state.play)
             })
 
+            this.audio = new Audio(soundSuccess)
+            this.audio.play();
             cronometro = setInterval(this.iniciar, 1000)
         }
         else
@@ -59,14 +89,26 @@ class Cronometro extends React.Component
             {
                 play: false,
                 ico: 'uil uil-play'
-            }, () =>
-            {
-                console.log(this.state.play)
             })
+
+            this.audio = new Audio(soundError)
+            this.audio.play();
 
             clearInterval(cronometro)
         }
-        console.log('click');  
+    }
+
+    hanbleReset = e =>
+    {
+        this.setState(
+        {
+            time: 
+            {
+                horas: 0,
+                minutos: 0,
+                segundos: 0,
+            }
+        })
     }
 
     render() 
@@ -79,7 +121,7 @@ class Cronometro extends React.Component
                     <button type="button" className="btn-iniciar-cronometro" onClick={this.handleIniciarCronometro}>
                         <i className={this.state.ico}></i>
                     </button>
-                    <button type="button" className="btn-reset-cronometro">
+                    <button type="button" className="btn-reset-cronometro" onClick={this.hanbleReset}>
                         <i className="uil uil-corner-up-left"></i>
                     </button>
                 </div>
