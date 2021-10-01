@@ -48,12 +48,13 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        if(isset($_POST['fecha']) && isset($_POST['tiempo']) && isset($_POST['sistema']))
+        $datos = json_decode(file_get_contents('php://input'));
+        if($datos != null)
         {
-            $fecha = $_POST['fecha'];
-            $tiempo = $_POST['tiempo'];
-            $sistema = $_POST['sistema'];
-    
+            $fecha = $datos->fecha;
+            $tiempo = $datos->tiempo;
+            $sistema = $datos->sistema;
+        
             $sql = "INSERT INTO lista (fecha, tiempo, sistema) VALUES ('$fecha', '$tiempo', '$sistema')";
             $resultado = mysqli_query($conexion, $sql);
             if(!$resultado)
@@ -65,11 +66,7 @@
             {
                 header("HTTP/1.1 200 OK");
                 echo 'Bien';
-            }
-        }
-        else
-        {
-            echo 'error';
+            }        
         }
     }
 

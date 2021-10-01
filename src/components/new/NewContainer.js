@@ -4,7 +4,7 @@ import url from '../../services/settings'
 
 const NewContainer = () =>
 {
-    const [ form, setForm ] = useState({sistema: '', fecha: '', tiempo: '01:01:01'})
+    const [ form, setForm ] = useState({fecha: '', tiempo: '', sistema: ''})
     
     const handleChange = e =>
     {
@@ -31,7 +31,8 @@ const NewContainer = () =>
                 body: JSON.stringify(form)
             }
             let res = await fetch(url, config)
-            console.log(res)
+            console.log(JSON.stringify(form))
+            console.log(res.json())
         }
         catch (error)
         {
