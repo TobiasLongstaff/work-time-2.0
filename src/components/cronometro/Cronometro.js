@@ -2,13 +2,14 @@ import React from 'react'
 import './cronometro.css'
 import soundSuccess from '../../sounds/success.wav'
 import soundError from '../../sounds/error.wav'
+import Cookies from 'universal-cookie'
 
 var cronometro
-
+const cookies = new Cookies();
 class Cronometro extends React.Component 
 {
 
-    constructor(props) 
+    constructor(props)
     {
         super(props)
         this.state =
@@ -26,7 +27,7 @@ class Cronometro extends React.Component
 
     iniciar = () =>
     {
-        if(this.state.time.minutos === 60)
+        if(this.state.time.minutos === 59)
         {
             this.setState(
             {
@@ -41,7 +42,7 @@ class Cronometro extends React.Component
             })
         }
 
-        if(this.state.time.segundos === 60)
+        if(this.state.time.segundos === 59)
         {
             this.setState(
             {
@@ -56,6 +57,7 @@ class Cronometro extends React.Component
         }
         else
         {
+            
             this.setState(
             {
                 time: 
@@ -95,6 +97,27 @@ class Cronometro extends React.Component
             this.audio.play();
 
             clearInterval(cronometro)
+            let horas = this.state.time.horas
+            let minutos = this.state.time.minutos
+            let segundos = this.state.time.segundos
+
+            if(horas.toString().length !==  2) 
+            {
+                horas = '0'+horas
+            }
+
+            if(minutos.toString().length !==  2) 
+            {
+                minutos = '0'+minutos
+            }
+
+            if(segundos.toString().length !== 2) 
+            {
+                segundos = '0'+segundos
+            }
+
+            let tiempofinal = horas+':'+minutos+':'+segundos
+            cookies.set('tiempo', tiempofinal, {path:'/'})
         }
     }
 
@@ -113,7 +136,23 @@ class Cronometro extends React.Component
 
     render() 
     {
-        const { horas, minutos, segundos } = this.state.time
+        let { horas, minutos, segundos } = this.state.time
+
+        if(horas.toString().length !==  2) 
+        {
+            horas = '0'+horas
+        }
+
+        if(minutos.toString().length !==  2) 
+        {
+            minutos = '0'+minutos
+        }
+
+        if(segundos.toString().length !== 2) 
+        {
+            segundos = '0'+segundos
+        }
+
         return(
             <div className="container-cronometro">
                 <h2>{horas}:{minutos}:{segundos}</h2>

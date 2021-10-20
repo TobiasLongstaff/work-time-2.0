@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import New from './New'
 import url from '../../services/settings'
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const NewContainer = () =>
 {
-    const [ form, setForm ] = useState({fecha: '', tiempo: '', sistema: ''})
+    const [ form, setForm ] = useState({fecha: '', tiempo: cookies.get('tiempo'), sistema: ''})
     
     const handleChange = e =>
     {
@@ -30,9 +32,7 @@ const NewContainer = () =>
                 },
                 body: JSON.stringify(form)
             }
-            let res = await fetch(url, config)
-            console.log(JSON.stringify(form))
-            console.log(res.json())
+            await fetch(url, config)
         }
         catch (error)
         {

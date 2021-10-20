@@ -28,7 +28,7 @@
         }
         else
         {
-            $sql="SELECT * FROM lista";
+            $sql="SELECT * FROM lista ORDER by ID DESC";
             $resultado=mysqli_query($conexion,$sql);
             $json = array();
             while($filas = mysqli_fetch_array($resultado))
